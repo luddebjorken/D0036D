@@ -35,6 +35,7 @@ public class gamePanel extends javax.swing.JPanel{
             
         }
 
+        //Keyboard input
         @Override
         public void keyPressed(KeyEvent e) {
             System.out.println("Key input");

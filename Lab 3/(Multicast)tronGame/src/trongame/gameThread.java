@@ -1,8 +1,27 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+    Author: Ludvig Björk Förare
+    Description: A class for handling the games logic + communication during runtime
+    
+    Members:
+    int tick;
+    int state;
+    int delay;
+
+    int[][] pos;
+    int[][] field;
+
+    int playerCount;
+    int id;
+    gamePanel panel;
+
+    public Socket server;
+    DatagramSocket in;
+    DataOutputStream out;
+
+    void update()
+    void move(int x, int y)
+ 
+*/
 package trongame;
 
 import java.io.DataOutputStream;
@@ -13,10 +32,6 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author ludfra-7-local
- */
 public class gameThread extends Thread{
     
     int tick = 1;
@@ -26,12 +41,18 @@ public class gameThread extends Thread{
     int[][] field;
     int playerCount;
     int id;
+
     public Socket server;
     DatagramSocket in;
-    
     DataOutputStream out;
+
     gamePanel panel;
     
+    //  Constructor
+    //  Socket s
+    //  Gp -> game panel reference
+    //  Playercount -> Number of players in game
+    //  id -> Local player ID
     public gameThread(Socket s, gamePanel gp, int playerCount, int id){
         server = s;
         panel = gp;
@@ -40,6 +61,7 @@ public class gameThread extends Thread{
         
         pos = new int[playerCount][2];
         
+        //Places players in their locations
         try{
             pos[0] = new int[]{0,0};
             pos[1] = new int[]{31,31};
@@ -49,6 +71,7 @@ public class gameThread extends Thread{
             
         }
         
+        //Sets up iostreams
         field = new int[32][32];
         try {
             out = new DataOutputStream(server.getOutputStream());
@@ -57,7 +80,7 @@ public class gameThread extends Thread{
             Logger.getLogger(gamePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
+        //Fills the field with empty spaces
         for (int i = 0; i < 32; i++) {
             for (int j = 0; j < 32; j++) {
                 field[i][j] = -1;
@@ -71,17 +94,15 @@ public class gameThread extends Thread{
     }
     
      
-    
+    //Update is run once per tick. Receives and handles position updates from server
     public void update(){
         
         try {
             //RECEIVES POSITIONS
-            
             byte[] buf = new byte[256];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             in.receive(packet);
             String msg = new String(packet.getData(), 0, packet.getLength());
-            System.out.println("MOOSAGE: " + msg);
             
             tick++;
             if(msg.charAt(0)=='1'){
@@ -107,6 +128,7 @@ public class gameThread extends Thread{
             }else if(msg.charAt(0)=='2'){
                 //RESERVED
             }else if(msg.charAt(0)=='3'){
+                //A player has won
                 panel.winnerName = msg.substring(msg.indexOf('|')+1);
                 state = 2;
             }
@@ -119,6 +141,7 @@ public class gameThread extends Thread{
         
     }
     
+    //Sends move command to server
     public void move(int x, int y){
         try {
             out.writeUTF("2|" + id + "|" + x + "," + y);
