@@ -9,7 +9,8 @@ Members:
 	playerInstance** pi: Array of pointers to playerInstances
 	std::thread playerThread[4]: Threads in which playerInstances are running
 
-Author: Ludvig Björk Förare
+
+Author: Ludvig Bjï¿½rk Fï¿½rare
 Version: 1.0
 Date: 181016
 */
@@ -30,7 +31,7 @@ connectThread::~connectThread() {
 //Defines gameInstance, playerInstance and playerThreads
 void connectThread::start() {
 	//Sets up server socket
-	int serverSocket = socket(AF_INET, SOCK_STREAM, NULL);
+	int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 	struct sockaddr_in addr;
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(44444);

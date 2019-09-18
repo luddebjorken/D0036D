@@ -1,0 +1,15 @@
+project(Lab_4)
+cmake_minimum_required(VERSION 3.0.0)
+
+FILE(GLOB children RELATIVE ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/*)
+FOREACH(child ${children})
+	IF(IS_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/${child})
+		IF(EXISTS ${CMAKE_CURRENT_LIST_DIR}/${child}/CMakeLists.txt)
+			ADD_SUBDIRECTORY(${child})
+		ENDIF()
+	ENDIF()
+ENDFOREACH()
+
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)

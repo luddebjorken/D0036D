@@ -1,0 +1,1 @@
+/usr/bin/g++  -g  -rdynamic CMakeFiles/asd.dir/gameThread.cpp.o CMakeFiles/asd.dir/listener.cpp.o CMakeFiles/asd.dir/windowPrinter.cpp.o  -o asd -lpthread 
