@@ -1,6 +1,5 @@
 #include "header.h"
-/*
-CLASS: CONNECTTHREAD
+/***
 Class for handling inital client connection. Creates game instance object and gives clients separate threads for input (through playerInstance).
 Members:
 	void start(): Starts connection
@@ -8,7 +7,6 @@ Members:
 	game* gameInstance: Pointer to current gameInstance
 	playerInstance** pi: Array of pointers to playerInstances
 	std::thread playerThread[4]: Threads in which playerInstances are running
-
 
 Author: Ludvig Bj�rk F�rare
 Version: 1.0
@@ -25,10 +23,12 @@ connectThread::connectThread() {
 
 connectThread::~connectThread() {
 }
-//Method for starting up game and handling incoming TCP connections
-//Pre: none
-//Post: none
-//Defines gameInstance, playerInstance and playerThreads
+/***
+Method for starting up game and handling incoming TCP connections
+Pre: none
+Post: none
+Defines gameInstance, playerInstance and playerThreads
+*/
 void connectThread::start() {
 	//Sets up server socket
 	int serverSocket = socket(AF_INET, SOCK_STREAM, 0);

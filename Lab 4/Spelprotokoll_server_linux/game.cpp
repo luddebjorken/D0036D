@@ -1,7 +1,6 @@
 #include "header.h"
 
-/*
-CLASS: GAME
+/***
 Class for running the main gamethread. Handles request from playerInstance threads.
 Members:
 	void requestMove(int id, Coordinate delta): Attempts to move player[id] in the direction of 'delta'. Sends new location results to all connected clients
@@ -12,6 +11,7 @@ Members:
 	int** field: Stores the current state of the playing field using enum 'ObjectDesc' (13x13 int array)
 	int clientSocket[4]: Stores client TCP sockets
 	int playerState[4]: Stores the state of players using enum 'States'
+	unsigned int seq_num[4]: Stores the players message sequence number for server to client messages
 	Coordinate playerPos[4]: Stores the players coordinates
 	bool loaded[4]: Stores the players loaded-state
 
@@ -65,10 +65,11 @@ game::~game()
 	delete[](field);
 	delete[](playerPos);
 }
-
-//Method for sending start message to all active players
-//Pre: none
-//Post: none
+/**
+Method for sending start message to all active players
+Pre: none
+Post: none
+*/
 void game::sendStart() {
 	//Sends start signal to all players
 	MsgHead startmsg;
@@ -77,9 +78,11 @@ void game::sendStart() {
 	startmsg.length = 16;
 	broadcast((char*)&startmsg, startmsg.length);
 }
-//Method for marking players as loaded. When all active players are loaded, sends loaded message to active players
-//Pre: int id: player ID to mark as loaded
-//Post: none
+/***
+Method for marking players as loaded. When all active players are loaded, sends loaded message to active players
+Pre: int id: player ID to mark as loaded
+Post: none
+*/
 void game::markLoaded(int id) {
 	//Sends start signal to all players
 	loaded[id] = true;
@@ -96,10 +99,12 @@ void game::markLoaded(int id) {
 	loadmsg.id = 0;
 	broadcast((char*)&loadmsg, loadmsg.length);
 }
-//Method for moving a player in direction of input. Takes collision into accord. Sends new position to active players
-//Pre: int id: ID of player to move. Coordinate delta: direction to move player
-//Post: none
-//Manipulates playerPos[id] to represent new location
+/**
+Method for moving a player in direction of input. Takes collision into accord. Sends new position to active players
+Pre: int id: ID of player to move. Coordinate delta: direction to move player
+Post: none
+Manipulates playerPos[id] to represent new location
+*/
 void game::requestMove(int id, Coordinate delta) {
 	if(playerState[id]==DEAD) return;
 	//Wished position
@@ -145,10 +150,12 @@ void game::requestMove(int id, Coordinate delta) {
 	broadcast((char*)&newPosMsg, newPosMsg.msg.head.length);
 
 }
-//Method for placing bomb on player[ID]. Sends bomb placement message to active players. Starts bomb timer
-//Pre: int id: ID of player to place bomb on
-//Post: none
-//Marks bomb in field[][]
+/***
+Method for placing bomb on player[ID]. Sends bomb placement message to active players. Starts bomb timer
+Pre: int id: ID of player to place bomb on
+Post: none
+Marks bomb in field[][]
+*/
 void game::placeBomb(int id) {
 	if (playerState[id]==DEAD || field[playerPos[id].y][playerPos[id].x == BOMB]) return;
 
@@ -170,7 +177,11 @@ void game::placeBomb(int id) {
 
 	broadcast((char*)&bombMsg, 28);
 }
-
+/***
+Method for sending the same message to all connected players
+Pre: char * message : message data,	const unsigned int length : length of message
+Post: none
+*/
 void game::broadcast(char * message, const unsigned int length)
 {
 	for (unsigned int i = 0; i < 4; i++)
@@ -187,8 +198,7 @@ void game::broadcast(char * message, const unsigned int length)
 	}
 }
 
-/*
-CLASS: BOMBTIMER
+/***
 Class for handling bomb explosions, is started as a separate thread to keep track of time
 Members:
 	start(Coordinate pos, int* clientSocket, int* playerState, Coordinate* playerPos, int** field): After four second, calculates and executes and explosion at position 'pos'. Kills players and destroys boxes withing explosion area
@@ -202,10 +212,12 @@ bombTimer::bombTimer() {
 bombTimer::~bombTimer() {
 }
 
-//Method for bomb behaviour. After four seconds explodes into '+' formation, taking collission into accord. Destroys boxes and kills players
-//Pre: Coordinate pos: position of bomb. int* clientSocket: array of clients. int* playerState: state of players. Coordinate* playerpos: Positions of players. int** field: Current field
-//Post: none
-//Manipulates field in explosion area, changes playerState if player is killed or has disconnected
+/***
+Method for bomb behaviour. After four seconds explodes into '+' formation, taking collission into accord. Destroys boxes and kills players
+Pre: Coordinate pos: position of bomb. int* clientSocket: array of clients. int* playerState: state of players. Coordinate* playerpos: Positions of players. int** field: Current field
+Post: none
+Manipulates field in explosion area, changes playerState if player is killed or has disconnected
+*/
 void bombTimer::start(Coordinate pos, int* clientSocket, int* playerState, Coordinate* playerPos, char** field) {
 	//Waits for explosion
 	std::this_thread::sleep_for(std::chrono::seconds(4));

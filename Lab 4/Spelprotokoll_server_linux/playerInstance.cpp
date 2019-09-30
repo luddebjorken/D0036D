@@ -2,8 +2,7 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-/*
-CLASS: PLAYERINSTANCE
+/***
 Class for listening for incomming TCP transmissions and responding to requests from a client
 Members:
 	void connect(int clientSocket, int id): Handles player connect sequence, starts gameinput when done
@@ -32,11 +31,12 @@ playerInstance::playerInstance(game* gameInstance)
 playerInstance::~playerInstance()
 {
 }
-
-//Method for handling connect sequence with client
-//Pre: int clientSocket: client TCP socket, int id: player ID
-//Post: none
-//Saves socket to (this)clientSocket, saves ID in defaultHead
+/***
+Method for handling connect sequence with client
+Pre: int clientSocket: client TCP socket, int id: player ID
+Post: none
+Saves socket to (this)clientSocket, saves ID in defaultHead
+*/
 void playerInstance::connect(int clientSocket, int id) {
 	this->clientSocket = clientSocket;
 
@@ -80,10 +80,11 @@ void playerInstance::connect(int clientSocket, int id) {
 	defaultHead.seq_no++; //Increases seq_no
 	gameInput(); //Starts listening for game input
 }
-
-//Method for listening and responding to client input
-//Pre: none
-//Post: none
+/***
+Method for listening and responding to client input
+Pre: none
+Post: none
+*/
 void playerInstance::gameInput() {
 	char buffer[256] = { '\0*' };
 	while (gameInstance->playerState[defaultHead.id]!=DEAD) { //While alive
