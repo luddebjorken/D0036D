@@ -15,28 +15,28 @@ Members:
 	Coordinate playerPos[4]: Stores the players coordinates
 	bool loaded[4]: Stores the players loaded-state
 
-Author: Ludvig Björk Förare
+Author: Ludvig Bjï¿½rk Fï¿½rare
 Version: 1.0
 Date: 181016
 */
 
 game::game()
 {
-	field = new int*[13];
+	field = new char*[13];
 
-	field[0] = new int[13]{ 0,0,2,2,2,2,2,2,2,2,2,0,0 };
-	field[1] = new int[13]{ 0,1,2,1,2,1,2,1,2,1,2,1,0 };
-	field[2] = new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[3] = new int[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
-	field[4] = new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[5] = new int[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
-	field[6] = new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[7] = new int[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
-	field[8] = new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[9] = new int[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
-	field[10] = new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[11] = new int[13]{ 0,1,2,1,2,1,2,1,2,1,2,1,0 };
-	field[12] = new int[13]{ 0,0,2,2,2,2,2,2,2,2,2,0,0 };
+	field[0] = new char[13]{ 0,0,0,0,2,2,2,2,2,2,2,0,0 };
+	field[1] = new char[13]{ 0,1,2,1,2,1,2,1,2,1,2,1,0 };
+	field[2] = new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[3] = new char[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
+	field[4] = new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[5] = new char[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
+	field[6] = new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[7] = new char[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
+	field[8] = new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[9] = new char[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
+	field[10] = new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[11] = new char[13]{ 0,1,2,1,2,1,2,1,2,1,2,1,0 };
+	field[12] = new char[13]{ 0,0,2,2,2,2,2,2,2,2,2,0,0 };
 
 	playerPos[0].x = 0;
 	playerPos[0].y = 0;
@@ -55,6 +55,8 @@ game::game()
 	playerState[2] = DISCONNECTED;
 	playerState[3] = DISCONNECTED;
 
+	
+
 }
 
 
@@ -70,16 +72,10 @@ game::~game()
 void game::sendStart() {
 	//Sends start signal to all players
 	MsgHead startmsg;
+	startmsg.id = 0;
 	startmsg.type = START;
 	startmsg.length = 16;
-	for (size_t i = 0; i < 4; i++)
-	{
-		startmsg.id = i;
-		if (send(clientSocket[i], (char*)&startmsg, 16, 0) == 0) {//If send fails, terminates player (No mercy)
-			playerState[i] = DISCONNECTED;
-		}
-		
-	}
+	broadcast((char*)&startmsg, startmsg.length);
 }
 //Method for marking players as loaded. When all active players are loaded, sends loaded message to active players
 //Pre: int id: player ID to mark as loaded
@@ -97,19 +93,15 @@ void game::markLoaded(int id) {
 
 	MsgHead loadmsg;
 	loadmsg.type = LOADED;
-	for (size_t i = 0; i < 4; i++)
-	{
-		loadmsg.id = i;
-		if (send(clientSocket[i], (char*)&loadmsg, 16, 0) == 0) {//If send fails, terminates player (No mercy)
-			playerState[i] = DISCONNECTED;
-		}
-	}
+	loadmsg.id = 0;
+	broadcast((char*)&loadmsg, loadmsg.length);
 }
 //Method for moving a player in direction of input. Takes collision into accord. Sends new position to active players
 //Pre: int id: ID of player to move. Coordinate delta: direction to move player
 //Post: none
 //Manipulates playerPos[id] to represent new location
 void game::requestMove(int id, Coordinate delta) {
+	if(playerState[id]==DEAD) return;
 	//Wished position
 	Coordinate newPos;
 	newPos.x = playerPos[id].x + delta.x;
@@ -142,6 +134,7 @@ void game::requestMove(int id, Coordinate delta) {
 	NewPlayerPositionMsg newPosMsg;
 	newPosMsg.msg.head.type = CHANGE;
 	newPosMsg.msg.head.length = 36;
+	newPosMsg.msg.head.id = 0;
 	newPosMsg.msg.type = NEWPLAYERPOSITION;
 
 	newPosMsg.id = id;
@@ -149,16 +142,7 @@ void game::requestMove(int id, Coordinate delta) {
 	newPosMsg.pos.y = newPos.y;
 	newPosMsg.rot = direction;
 
-	//Sends message to active players
-	for (size_t i = 0; i < 4; i++)
-	{
-		if (playerState[i] != DISCONNECTED) {
-			newPosMsg.msg.head.id = i;
-			if(send(clientSocket[i], (char*)&newPosMsg, 36, 0)==0){//If send fails, terminates player (No mercy)
-				playerState[i] = DISCONNECTED;
-			}
-		}
-	}
+	broadcast((char*)&newPosMsg, newPosMsg.msg.head.length);
 
 }
 //Method for placing bomb on player[ID]. Sends bomb placement message to active players. Starts bomb timer
@@ -166,8 +150,7 @@ void game::requestMove(int id, Coordinate delta) {
 //Post: none
 //Marks bomb in field[][]
 void game::placeBomb(int id) {
-	//Tests if place is avalible. If not, aborts
-	if (field[playerPos[id].x][playerPos[id].y == BOMB]) return;
+	if (playerState[id]==DEAD || field[playerPos[id].y][playerPos[id].x == BOMB]) return;
 
 	//Places bomb on field
 	field[playerPos[id].x][playerPos[id].y] = BOMB;
@@ -176,6 +159,7 @@ void game::placeBomb(int id) {
 	BombPlaceMsg bombMsg;
 	bombMsg.msg.head.length = 28;
 	bombMsg.msg.head.type = CHANGE;
+	bombMsg.msg.head.id = 0;
 	bombMsg.msg.type = BOMBPLACE;
 	bombMsg.pos = playerPos[id];
 
@@ -184,12 +168,19 @@ void game::placeBomb(int id) {
 	std::thread t = std::thread(&bombTimer::start, b, playerPos[id], clientSocket, playerState, playerPos, field);
 	t.detach();
 
-	//Sends message to all players
-	for (size_t i = 0; i < 4; i++)
+	broadcast((char*)&bombMsg, 28);
+}
+
+void game::broadcast(char * message, const unsigned int length)
+{
+	for (unsigned int i = 0; i < 4; i++)
 	{
 		if (playerState[i] != DISCONNECTED) {
-			bombMsg.msg.head.id = i;
-			if (send(clientSocket[i], (char*)&bombMsg, 28, 0) == 0) {//If send fails, terminates player (No mercy)
+			seq_num[i]++;
+			message[4] = seq_num[i]%256;
+			message[5] = floor(((float)(seq_num[i]))/256);
+			message[8] = i;
+			if (send(clientSocket[i], message, length, MSG_NOSIGNAL) == 0) {//If send fails, terminates player (No mercy)
 				playerState[i] = DISCONNECTED;
 			}
 		}
@@ -201,7 +192,7 @@ CLASS: BOMBTIMER
 Class for handling bomb explosions, is started as a separate thread to keep track of time
 Members:
 	start(Coordinate pos, int* clientSocket, int* playerState, Coordinate* playerPos, int** field): After four second, calculates and executes and explosion at position 'pos'. Kills players and destroys boxes withing explosion area
-Author: Ludvig Björk Förare
+Author: Ludvig Bjï¿½rk Fï¿½rare
 Version: 1.0
 Date: 181016
 */
@@ -215,7 +206,7 @@ bombTimer::~bombTimer() {
 //Pre: Coordinate pos: position of bomb. int* clientSocket: array of clients. int* playerState: state of players. Coordinate* playerpos: Positions of players. int** field: Current field
 //Post: none
 //Manipulates field in explosion area, changes playerState if player is killed or has disconnected
-void bombTimer::start(Coordinate pos, int* clientSocket, int* playerState, Coordinate* playerPos, int** field) {
+void bombTimer::start(Coordinate pos, int* clientSocket, int* playerState, Coordinate* playerPos, char** field) {
 	//Waits for explosion
 	std::this_thread::sleep_for(std::chrono::seconds(4));
 
@@ -334,17 +325,16 @@ void bombTimer::start(Coordinate pos, int* clientSocket, int* playerState, Coord
 
 	field[pos.x][pos.y] = 0; //Removes bomb
 
-	//For every potential player
+	//Death check
 	for (size_t i = 0; i < 4; i++)
 	{
-		if (playerState[i] != DISCONNECTED) { //If player is not disconnected
+		if (playerState[i] != DISCONNECTED) {
 			if ((playerPos[i].x == pos.x && playerPos[i].y >= startV.y && playerPos[i].y < startV.y + lengthV) || //If player is in affected area
 				(playerPos[i].y == pos.y && playerPos[i].x >= startH.x && playerPos[i].x < startV.x + lengthH)) {
 				playerState[i] = DEAD;
 			}
-			//
 			explodeMsg.msg.head.id = i;
-			if (send(clientSocket[i], (char*)&explodeMsg, 28, 0) == 0) { //If send fails, terminates player (No mercy)
+			if (send(clientSocket[i], (char*)&explodeMsg, 28, MSG_NOSIGNAL) == 0) { //If send fails, terminates player (No mercy)
 				playerState[i] = DISCONNECTED;
 			}
 		}

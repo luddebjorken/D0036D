@@ -15,7 +15,7 @@ Members:
 	MsgHead defaultHead: Default message head. Also used to store player ID
 	int clientSocket: Client socket
 
-Author: Ludvig Björk Förare
+Author: Ludvig Bjï¿½rk Fï¿½rare
 Version: 1.0
 Date: 181016
 */
@@ -55,6 +55,28 @@ void playerInstance::connect(int clientSocket, int id) {
 	MsgHead joinResponse = defaultHead;
 	joinResponse.type = JOIN;
 	send(clientSocket, (char*)&joinResponse, joinResponse.length, 0);
+	
+	defaultHead.seq_no++; //Increases seq_no
+
+	//Sends board info
+	MsgHead fieldUpdateHead = defaultHead;
+	fieldUpdateHead.type = CHANGE;
+	fieldUpdateHead.length = 192;
+
+	UpdateFieldMsg fieldUpdate;
+	fieldUpdate.msg.head = fieldUpdateHead;
+	fieldUpdate.msg.type = FIELDUPDATE;
+	for(int y = 0; y < 13; y++)
+	{
+		for(int x = 0; x < 13; x++)
+		{
+			fieldUpdate.board[x+y*13] = gameInstance->field[x][y];
+		}
+	}
+	std::cout << sizeof(fieldUpdate) << std::endl;
+	send(clientSocket, (char*)&fieldUpdate, fieldUpdateHead.length, 0);
+
+
 	defaultHead.seq_no++; //Increases seq_no
 	gameInput(); //Starts listening for game input
 }

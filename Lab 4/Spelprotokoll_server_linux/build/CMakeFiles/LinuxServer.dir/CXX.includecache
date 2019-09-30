@@ -1,0 +1,50 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/connectThread.cpp
+header.h
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/header.h
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/game.cpp
+header.h
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/header.h
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/header.h
+thread
+-
+iostream
+-
+sys/types.h
+-
+sys/socket.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+string
+-
+pthread.h
+-
+chrono
+-
+cstring
+-
+structs.h
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/structs.h
+math.h
+-
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/playerInstance.cpp
+header.h
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/header.h
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/structs.h
+string
+-
+

@@ -1,0 +1,1 @@
+/usr/bin/g++  -g  -rdynamic CMakeFiles/LinuxServer.dir/connectThread.o CMakeFiles/LinuxServer.dir/game.o CMakeFiles/LinuxServer.dir/playerInstance.o  -o LinuxServer -lpthread 

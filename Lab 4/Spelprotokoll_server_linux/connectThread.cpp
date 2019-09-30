@@ -34,7 +34,7 @@ void connectThread::start() {
 	int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 	struct sockaddr_in addr;
 	addr.sin_family = AF_INET;
-	addr.sin_port = htons(44444);
+	addr.sin_port = htons(12312);
 	addr.sin_addr.s_addr = INADDR_ANY;
 	socklen_t addrSize = sizeof(addr);
 
@@ -61,10 +61,9 @@ void connectThread::start() {
 		//Takes incomming connections
 		if (playersConnected < 4) {
 			if (clientSocket = accept(serverSocket, (sockaddr*)&addr, &addrSize)) {
-
 				//Defines player instance
-				pi[playersConnected] = new playerInstance(gameInstance);
 				std::cout << "Client connected!" << std::endl;
+				pi[playersConnected] = new playerInstance(gameInstance);
 
 				//Creates listening thread for player
 				playerThread[playersConnected] = std::thread(&playerInstance::connect, pi[playersConnected], clientSocket, playersConnected);
@@ -75,32 +74,10 @@ void connectThread::start() {
 				gameInstance->playerState[playersConnected] = ALIVE;
 
 				playersConnected++;
-
-				/*
-				//Checks if any players have disconnected
-				int disconnects = 0;
-				for (size_t i = 0; i < playersConnected; i++)
-				{
-					if (!pi[i]->connected) {
-						delete(pi[i]);
-						for (size_t j = i; j < playersConnected; j++)
-						{
-							if (pi[j] != nullptr) {
-								if (pi[j]->connected) {
-									pi[i] = pi[j];
-									pi[j] = nullptr;
-								}
-							}
-						}
-						disconnects++;
-					}
-				}
-				playersConnected -= disconnects;
-				*/
-
 			}
 		}
-		else {
+		else 
+		{
 			std::cout << "Lobby full!" << std::endl;
 			break;
 		}

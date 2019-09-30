@@ -53,7 +53,8 @@ enum ChangeType{
 	PLAYERLEAVE,
 	NEWPLAYERPOSITION,
 	BOMBPLACE,
-	EXPLOSION
+	EXPLOSION,
+	FIELDUPDATE
 };
 
 struct ChangeMsg { //size 20
@@ -78,6 +79,11 @@ struct NewPlayerPositionMsg{
 struct BombPlaceMsg {
 	ChangeMsg msg;
 	Coordinate pos;
+};
+struct UpdateFieldMsg
+{
+	ChangeMsg msg;
+	char board[169];
 };
 
 //Event message (server to client)
