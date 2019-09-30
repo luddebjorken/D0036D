@@ -23,21 +23,22 @@ bool game::findServer() {
 		return false;
 	}
 	std::cout << "Name: ";
-	std::string name = "ludde2"; 
+	std::string name;
 	//getline(std::cin, name);
+	name = "ludde";
 
 	while (true) {
 		std::cout << "Server ip: ";
-		std::string addrString = "10.10.10.13";
-		//std::string addrString = "127.0.0.1";
+		std::string addrString;
 		//getline(std::cin, addrString);
+		addrString = "130.240.135.43";
 
 		//Defines address
-		sock = socket(AF_INET, SOCK_STREAM, NULL);
+		sock = socket(AF_INET, SOCK_STREAM, 0);
 
 		sockaddr_in addr;
 		addr.sin_family = AF_INET; //IPv4
-		addr.sin_port = htons(44444); //Client listen port
+		addr.sin_port = htons(12312); //Client listen port
 		inet_pton(AF_INET, addrString.c_str(), &addr.sin_addr);
 
 		//Connects to socket
@@ -76,7 +77,14 @@ bool game::findServer() {
 		std::cout << "ID: " << defaultHead.id << std::endl;
 
 		wp = new windowPrinter(defaultHead.id);
-
+		
+		char fieldBuffer[512] = { '\0*' };
+		recv(sock, fieldBuffer, sizeof(fieldBuffer), 0);
+		unsigned int len = fieldBuffer[0];
+		UpdateFieldMsg newFieldMsg;
+		memcpy(&newFieldMsg, fieldBuffer, 192);
+		wp->setField(newFieldMsg.board);
+		
 		listenThread = new listener(sock, defaultHead.id, wp);
 		std::thread t = std::thread(&listener::listen, listenThread);
 		t.detach();
@@ -104,7 +112,6 @@ void game::runGame(bool * loaded) {
 	
 	send(sock, (char*)&loadmsg, 16, 0);
 	while (!loaded); //Waits until all player have loaded
-	std::cout << "SWEEEEET VICTORYYYY" << std::endl;
 	Coordinate p1Pos;
 	Coordinate p1Move;
 	int bombCount = 2;
@@ -121,7 +128,7 @@ void game::runGame(bool * loaded) {
 			
 		}
 
-		if (bombCount < 2) { //Fult, men förhoppningsvis mer optimiserat
+		if (bombCount < 2) { //Fult, men fï¿½rhoppningsvis mer optimiserat
 			if (((double)std::clock()-timer)/ CLOCKS_PER_SEC > 2)
 			{
 				timer = std::clock();

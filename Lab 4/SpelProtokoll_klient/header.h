@@ -18,6 +18,8 @@ public:
 	windowPrinter(unsigned int id);
 	~windowPrinter();
 
+	void setField(char field[]);
+
 	void fillRect(Coordinate pos, int w, int h, int color, int delay);
 	void fillRect(int x, int y, int w, int h, int color, int delay);
 	void drawRect(Coordinate pos, int w, int h, int color, int delay);
@@ -27,7 +29,7 @@ public:
 	void clearRect(Coordinate pos, int w, int h);
 
 	void drawBoard();
-	void drawBoxes(int** field); 
+	void drawBoxes(char** field); 
 	void drawPlayer(int playerID, Coordinate pos, byte direction);
 	void drawBomb(Coordinate pos);
 
@@ -38,7 +40,7 @@ private:
 	int sock;
 	sockaddr_in addr;
 	unsigned int id;
-	int** field;
+	char** field;
 	Coordinate* playerPos;
 	Coordinate grid(Coordinate in);
 };

@@ -22,7 +22,7 @@ void listener::listen() {
 			closesocket(sock);
 			exit(0);
 			break;
-		}
+		} 
 		MsgHead head;
 		memcpy(&head, buffer, 16);
 		std::cout << "Message received! size: " << head.length << " | sequence: " << head.seq_no << " | id: " << head.id << " | type: " << head.type << std::endl; //DEBUG
