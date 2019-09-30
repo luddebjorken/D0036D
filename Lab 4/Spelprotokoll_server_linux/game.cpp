@@ -176,6 +176,9 @@ void game::broadcast(char * message, const unsigned int length)
 	for (unsigned int i = 0; i < 4; i++)
 	{
 		if (playerState[i] != DISCONNECTED) {
+			seq_num[i]++;
+			message[4] = seq_num[i]%256;
+			message[5] = floor(((float)(seq_num[i]))/256);
 			message[8] = i;
 			if (send(clientSocket[i], message, length, MSG_NOSIGNAL) == 0) {//If send fails, terminates player (No mercy)
 				playerState[i] = DISCONNECTED;

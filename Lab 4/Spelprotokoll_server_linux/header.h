@@ -10,6 +10,7 @@
 #include <chrono>
 #include <cstring>
 #include "structs.h"
+#include <math.h>
 
 class bombTimer
 {
@@ -32,6 +33,7 @@ public:
 	char** field;
 	int clientSocket[4];
 	int playerState[4]; //0 = disconnected, 1 = alive, 2 = dead
+	unsigned int seq_num[4];
 	Coordinate playerPos[4];
 	bool loaded[4];
 };
