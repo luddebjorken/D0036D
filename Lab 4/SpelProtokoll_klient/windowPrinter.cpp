@@ -28,7 +28,7 @@ Members:
 	int** field: Stores state of playing field
 	Coordinate* playerPos: Stores position of players
 
-Author: Ludvig Björk Förare
+Author: Ludvig Bjï¿½rk Fï¿½rare
 Version: 1.0
 Date: 181016
 */
@@ -67,20 +67,20 @@ windowPrinter::windowPrinter(unsigned int id)
 	bind(sock, (sockaddr*)&addr, sizeof(addr));
 	
 	//Defines field state
-	field = new int*[13];
-	field[0] =	new int[13]{ 0,0,2,2,2,2,2,2,2,2,2,0,0 };
-	field[1] =	new int[13]{ 0,1,2,1,2,1,2,1,2,1,2,1,0 };
-	field[2] =	new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[3] =	new int[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
-	field[4] =	new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[5] =	new int[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
-	field[6] =	new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[7] =	new int[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
-	field[8] =	new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[9] =	new int[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
-	field[10] = new int[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
-	field[11] = new int[13]{ 0,1,2,1,2,1,2,1,2,1,2,1,0 };
-	field[12] = new int[13]{ 0,0,2,2,2,2,2,2,2,2,2,0,0 };
+	field = new char*[13];
+	field[0] =	new char[13]{ 0,0,2,2,2,2,2,2,2,2,2,0,0 };
+	field[1] =	new char[13]{ 0,1,2,1,2,1,2,1,2,1,2,1,0 };
+	field[2] =	new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[3] =	new char[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
+	field[4] =	new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[5] =	new char[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
+	field[6] =	new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[7] =	new char[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
+	field[8] =	new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[9] =	new char[13]{ 2,1,2,1,2,1,2,1,2,1,2,1,2 };
+	field[10] = new char[13]{ 2,2,2,2,2,2,2,2,2,2,2,2,2 };
+	field[11] = new char[13]{ 0,1,2,1,2,1,2,1,2,1,2,1,0 };
+	field[12] = new char[13]{ 0,0,2,2,2,2,2,2,2,2,2,0,0 };
 	playerPos = new Coordinate[4];
 
 	//Sets players start position
@@ -103,6 +103,17 @@ windowPrinter::~windowPrinter()
 {
 }
 
+void windowPrinter::setField(char field[])
+{
+	for(int y = 0; y < 13; y++)
+	{
+		for(int x = 0; x < 13; x++)
+		{
+			this->field[x][y] = field[x+y*13];
+			std::cout << field[x+y*13] << std::endl;
+		}
+	}
+}
 
 
 
@@ -234,7 +245,7 @@ void windowPrinter::drawBoard() {
 	drawBoxes(field);
 }
 
-void windowPrinter::drawBoxes(int** field) {
+void windowPrinter::drawBoxes(char** field) {
 	Coordinate pos;
 	//For every row
 	for (pos.x = 0; pos.x < 13; pos.x += 1)
