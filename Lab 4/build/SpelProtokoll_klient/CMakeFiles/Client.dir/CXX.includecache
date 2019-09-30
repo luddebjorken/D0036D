@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/gameThread.cpp
+header.h
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/header.h
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/header.h
+iostream
+-
+WS2tcpip.h
+-
+cstring
+-
+string
+-
+thread
+-
+Windows.h
+-
+ctime
+-
+structs.h
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/structs.h
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/listener.cpp
+header.h
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/header.h
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/structs.h
+string
+-
+
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/windowPrinter.cpp
+header.h
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/header.h
+

@@ -260,16 +260,16 @@ Lab_4_BINARY_DIR:STATIC=/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/
 Lab_4_SOURCE_DIR:STATIC=/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4
 
 //Value Computed by CMake
-Lab_BINARY_DIR:STATIC=/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build
-
-//Value Computed by CMake
-Lab_SOURCE_DIR:STATIC=/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4
-
-//Value Computed by CMake
 LinuxServer_BINARY_DIR:STATIC=/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build/Spelprotokoll_server_linux
 
 //Value Computed by CMake
 LinuxServer_SOURCE_DIR:STATIC=/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux
+
+//Value Computed by CMake
+Server_BINARY_DIR:STATIC=/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build/SpelProtokoll_server
+
+//Value Computed by CMake
+Server_SOURCE_DIR:STATIC=/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_server
 
 
 ########################
@@ -382,7 +382,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

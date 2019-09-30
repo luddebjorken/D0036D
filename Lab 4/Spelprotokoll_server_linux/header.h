@@ -16,7 +16,7 @@ class bombTimer
 public:
 	bombTimer();
 	~bombTimer();
-	void start(Coordinate pos, int* clientSocket, int* playerState, Coordinate* playerPos, int** field);
+	void start(Coordinate pos, int* clientSocket, int* playerState, Coordinate* playerPos, char** field);
 };
 
 class game
@@ -28,7 +28,8 @@ public:
 	void placeBomb(int id);
 	void sendStart();
 	void markLoaded(int id);
-	int** field;
+	void broadcast(char * message, const unsigned int length);
+	char** field;
 	int clientSocket[4];
 	int playerState[4]; //0 = disconnected, 1 = alive, 2 = dead
 	Coordinate playerPos[4];

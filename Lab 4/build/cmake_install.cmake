@@ -40,6 +40,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build/SpelProtokoll_klient/cmake_install.cmake")
+  include("/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build/SpelProtokoll_server/cmake_install.cmake")
   include("/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build/Spelprotokoll_server_linux/cmake_install.cmake")
 
 endif()

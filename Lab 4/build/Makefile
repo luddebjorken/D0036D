@@ -146,6 +146,19 @@ Client/fast:
 .PHONY : Client/fast
 
 #=============================================================================
+# Target rules for targets named Server
+
+# Build rule for target.
+Server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Server
+.PHONY : Server
+
+# fast build rule for target.
+Server/fast:
+	$(MAKE) -f SpelProtokoll_server/CMakeFiles/Server.dir/build.make SpelProtokoll_server/CMakeFiles/Server.dir/build
+.PHONY : Server/fast
+
+#=============================================================================
 # Target rules for targets named LinuxServer
 
 # Build rule for target.
@@ -169,6 +182,7 @@ help:
 	@echo "... package"
 	@echo "... package_source"
 	@echo "... Client"
+	@echo "... Server"
 	@echo "... LinuxServer"
 .PHONY : help
 

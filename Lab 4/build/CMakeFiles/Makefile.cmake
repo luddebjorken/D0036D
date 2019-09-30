@@ -9,6 +9,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "../CMakeLists.txt"
   "../SpelProtokoll_klient/CMakeLists.txt"
+  "../SpelProtokoll_server/CMakeLists.txt"
   "../Spelprotokoll_server_linux/CMakeLists.txt"
   "CMakeFiles/3.15.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.15.3/CMakeCXXCompiler.cmake"
@@ -55,11 +56,13 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CPackSourceConfig.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "SpelProtokoll_klient/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "SpelProtokoll_server/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Spelprotokoll_server_linux/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "SpelProtokoll_klient/CMakeFiles/Client.dir/DependInfo.cmake"
+  "SpelProtokoll_server/CMakeFiles/Server.dir/DependInfo.cmake"
   "Spelprotokoll_server_linux/CMakeFiles/LinuxServer.dir/DependInfo.cmake"
   )

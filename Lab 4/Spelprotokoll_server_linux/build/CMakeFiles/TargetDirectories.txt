@@ -1,0 +1,3 @@
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/build/CMakeFiles/rebuild_cache.dir
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/build/CMakeFiles/LinuxServer.dir
+/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/build/CMakeFiles/edit_cache.dir

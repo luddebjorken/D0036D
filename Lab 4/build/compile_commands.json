@@ -15,6 +15,21 @@
   "file": "/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_klient/windowPrinter.cpp"
 },
 {
+  "directory": "/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build/SpelProtokoll_server",
+  "command": "/usr/bin/g++    -g   -o CMakeFiles/Server.dir/connectThread.cpp.o -c \"/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_server/connectThread.cpp\"",
+  "file": "/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_server/connectThread.cpp"
+},
+{
+  "directory": "/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build/SpelProtokoll_server",
+  "command": "/usr/bin/g++    -g   -o CMakeFiles/Server.dir/game.cpp.o -c \"/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_server/game.cpp\"",
+  "file": "/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_server/game.cpp"
+},
+{
+  "directory": "/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build/SpelProtokoll_server",
+  "command": "/usr/bin/g++    -g   -o CMakeFiles/Server.dir/playerInstance.cpp.o -c \"/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_server/playerInstance.cpp\"",
+  "file": "/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/SpelProtokoll_server/playerInstance.cpp"
+},
+{
   "directory": "/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/build/Spelprotokoll_server_linux",
   "command": "/usr/bin/g++    -g   -o CMakeFiles/LinuxServer.dir/connectThread.cpp.o -c \"/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/connectThread.cpp\"",
   "file": "/home/ludfra-7/git/gitlab/Nätverksprogrammering/D0036D/Lab 4/Spelprotokoll_server_linux/connectThread.cpp"
